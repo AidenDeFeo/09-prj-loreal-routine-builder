@@ -1,0 +1,15 @@
+{
+  "name": "loreal-routine-builder",
+  "version": "1.0.0",
+  "description": "L'Oréal Smart Routine & Product Advisor with AI integration",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "dev": "python3 -m http.server 8000"
+  },
+  "keywords": ["beauty", "skincare", "ai", "openai", "loreal"],
+  "author": "Student",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
