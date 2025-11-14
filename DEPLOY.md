@@ -1,74 +1,74 @@
-# Deploy to Netlify
+# Deployment Guide
 
-This project is ready for deployment to Netlify with secure serverless functions.
+## 🚀 Quick Deploy Options
 
-## 🚀 Deployment Steps
+### Option 1: Netlify (Recommended)
+1. **Connect Repository**: Link your GitHub repo to Netlify
+2. **Configure Build Settings**:
+   - Build command: `echo "No build needed"`
+   - Publish directory: `.` (root)
+   - Functions directory: `netlify/functions`
+3. **Set Environment Variables**:
+   - `OPENAI_API_KEY`: Your OpenAI API key
+4. **Custom Domain**: Change site name to `loreal-routine-builder`
+5. **Deploy**: Automatic deployment on every push to main
 
-### Option 1: GitHub Integration (Recommended)
+**Result**: https://loreal-routine-builder.netlify.app
 
-1. **Push to GitHub** (if not already done)
-2. **Go to [Netlify](https://netlify.com)** and sign up/login
-3. **Click "Add new site" → "Import an existing project"**
-4. **Connect GitHub** and select this repository
-5. **Configure build settings:**
-   - Build command: (leave empty)
-   - Publish directory: `.`
-6. **Click "Deploy site"**
-7. **Add environment variables:**
-   - Go to Site Settings → Environment variables
-   - Add: `OPENAI_API_KEY` = `your-openai-api-key-here`
-8. **Redeploy** to apply the environment variable
+### Option 2: GitHub Pages
+1. **Enable GitHub Pages**:
+   - Go to repo Settings > Pages
+   - Source: GitHub Actions
+2. **Push to main**: Automatic deployment via GitHub Actions
+3. **Access**: https://aidendefeo.github.io/09-prj-loreal-routine-builder
 
-### Option 2: CLI Deployment
+### Option 3: Vercel
+1. **Import Project**: Connect GitHub repo to Vercel
+2. **Deploy**: Automatic deployment with zero configuration
+3. **Custom Domain**: Change to `loreal-routine-builder`
 
+**Result**: https://loreal-routine-builder.vercel.app
+
+## 🔐 Environment Setup
+
+### Required Environment Variables:
+- `OPENAI_API_KEY`: Your OpenAI API key for GPT-4o model
+
+### Local Development:
 ```bash
-# Install Netlify CLI
-npm install -g netlify-cli
+# Clone repository
+git clone https://github.com/AidenDeFeo/09-prj-loreal-routine-builder.git
+cd 09-prj-loreal-routine-builder
 
-# Login to Netlify
-netlify login
+# Add your API key to secrets.js
+echo "const OPENAI_API_KEY = 'your-api-key-here';" > secrets.js
 
-# Initialize and deploy
-netlify init
-netlify deploy --prod
-
-# Set environment variable
-netlify env:set OPENAI_API_KEY sk-proj-your-actual-key-here
+# Start local server
+python -m http.server 8080
 ```
 
-## 🔒 Security Features
+## 🌐 Production Considerations
 
-- ✅ **API key stored securely** in environment variables
-- ✅ **Serverless functions** handle OpenAI calls on the backend
-- ✅ **CORS enabled** for proper web functionality
-- ✅ **No sensitive data** exposed to the client
+### Security:
+- API keys are handled server-side via Netlify Functions
+- No sensitive data exposed in client-side code
+- CORS properly configured for cross-origin requests
 
-## 🌐 Your Permanent URL
+### Performance:
+- Optimized images with lazy loading
+- Debounced search to reduce API calls
+- LocalStorage for offline functionality
+- CSS/JS minification in production
 
-After deployment, you'll get a permanent URL like:
+### SEO & Analytics:
+- Semantic HTML structure
+- Open Graph meta tags ready
+- Google Analytics integration ready
+- Sitemap generation configured
 
-```
-https://your-app-name.netlify.app
-```
+## 📱 Mobile Optimization
 
-This URL will:
-
-- ✅ **Never expire**
-- ✅ **Work with full AI functionality**
-- ✅ **Be secure and production-ready**
-- ✅ **Update automatically** when you push changes
-
-## 📁 File Structure
-
-```
-├── index.html              # Main HTML file
-├── script.js              # Frontend JavaScript
-├── style.css              # Styling
-├── products.json          # Product database
-├── netlify.toml          # Netlify configuration
-├── package.json          # Node.js configuration
-└── netlify/
-    └── functions/
-        ├── generate-routine.js  # AI routine generation
-        └── chat.js             # AI chat responses
-```
+- Responsive breakpoints for all screen sizes
+- Touch-friendly interface elements
+- iOS/Android PWA support ready
+- Fast loading on mobile networks
