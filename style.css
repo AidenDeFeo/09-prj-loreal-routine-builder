@@ -155,7 +155,7 @@ html[dir="rtl"] .clear-search-btn {
     flex-direction: column;
     gap: 12px;
   }
-  
+
   .search-input-container,
   .search-section select {
     width: 100%;
@@ -214,7 +214,11 @@ html[dir="rtl"] .language-toggle {
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  background: linear-gradient(135deg, var(--loreal-orange) 0%, var(--loreal-dark-orange) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--loreal-orange) 0%,
+    var(--loreal-dark-orange) 100%
+  );
   color: var(--loreal-white);
   border: none;
   border-radius: 20px;
@@ -226,7 +230,11 @@ html[dir="rtl"] .language-toggle {
 }
 
 .language-btn:hover {
-  background: linear-gradient(135deg, var(--loreal-dark-orange) 0%, var(--loreal-gold) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--loreal-dark-orange) 0%,
+    var(--loreal-gold) 100%
+  );
   transform: translateY(-1px);
   box-shadow: 0 4px 10px rgba(255, 105, 0, 0.4);
 }
@@ -592,7 +600,11 @@ html[dir="rtl"] .ai-message .message-bubble::before {
   margin-bottom: 15px;
   color: var(--loreal-dark-gray);
   font-size: 14px;
-  background: linear-gradient(135deg, rgba(255, 105, 0, 0.1) 0%, rgba(212, 175, 55, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 105, 0, 0.1) 0%,
+    rgba(212, 175, 55, 0.1) 100%
+  );
   border-radius: 8px;
   border-left: 4px solid var(--loreal-orange);
 }
@@ -649,21 +661,13 @@ html[dir="rtl"] .ai-message .message-bubble::before {
 }
 
 .clear-chat-btn {
-  background: linear-gradient(
-    135deg,
-    var(--loreal-dark-gray) 0%,
-    #4a4a4a 100%
-  );
+  background: linear-gradient(135deg, var(--loreal-dark-gray) 0%, #4a4a4a 100%);
   font-size: 16px;
   box-shadow: 0 3px 8px rgba(44, 44, 44, 0.3);
 }
 
 .clear-chat-btn:hover {
-  background: linear-gradient(
-    135deg,
-    #606060 0%,
-    #808080 100%
-  );
+  background: linear-gradient(135deg, #606060 0%, #808080 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(44, 44, 44, 0.4);
 }

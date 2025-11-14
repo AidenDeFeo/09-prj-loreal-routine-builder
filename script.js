@@ -100,8 +100,8 @@ let selectedProducts = [];
 
 /* Current filter state */
 let currentFilters = {
-  category: '',
-  search: ''
+  category: "",
+  search: "",
 };
 
 /* Conversation history and user profile tracking */
@@ -113,24 +113,24 @@ let userProfile = {
   concerns: [],
   selectedProducts: [],
   sessionStarted: null,
-  totalMessages: 0
+  totalMessages: 0,
 };
 
 /* Load conversation history from localStorage */
 function loadConversationHistory() {
   try {
-    const savedHistory = localStorage.getItem('lorealChatHistory');
-    const savedProfile = localStorage.getItem('lorealUserProfile');
-    
+    const savedHistory = localStorage.getItem("lorealChatHistory");
+    const savedProfile = localStorage.getItem("lorealUserProfile");
+
     if (savedHistory) {
       conversationHistory = JSON.parse(savedHistory);
     }
-    
+
     if (savedProfile) {
       userProfile = { ...userProfile, ...JSON.parse(savedProfile) };
     }
   } catch (error) {
-    console.log('No previous conversation history found');
+    console.log("No previous conversation history found");
   }
 }
 
@@ -139,10 +139,10 @@ function saveConversationHistory() {
   try {
     // Keep only last 50 messages to prevent localStorage overflow
     const recentHistory = conversationHistory.slice(-50);
-    localStorage.setItem('lorealChatHistory', JSON.stringify(recentHistory));
-    localStorage.setItem('lorealUserProfile', JSON.stringify(userProfile));
+    localStorage.setItem("lorealChatHistory", JSON.stringify(recentHistory));
+    localStorage.setItem("lorealUserProfile", JSON.stringify(userProfile));
   } catch (error) {
-    console.warn('Could not save conversation history:', error);
+    console.warn("Could not save conversation history:", error);
   }
 }
 
@@ -156,27 +156,31 @@ function clearConversationHistory() {
     concerns: [],
     selectedProducts: [],
     sessionStarted: null,
-    totalMessages: 0
+    totalMessages: 0,
   };
-  localStorage.removeItem('lorealChatHistory');
-  localStorage.removeItem('lorealUserProfile');
+  localStorage.removeItem("lorealChatHistory");
+  localStorage.removeItem("lorealUserProfile");
 }
 
 /* Clear conversation and restart chat */
 function clearConversationAndRestart() {
-  if (confirm('Are you sure you want to clear the conversation history? This will remove all previous messages and start fresh.')) {
+  if (
+    confirm(
+      "Are you sure you want to clear the conversation history? This will remove all previous messages and start fresh."
+    )
+  ) {
     clearConversationHistory();
-    
+
     // Clear chat window
-    const chatWindow = document.getElementById('chatWindow');
-    chatWindow.innerHTML = '';
-    
+    const chatWindow = document.getElementById("chatWindow");
+    chatWindow.innerHTML = "";
+
     // Reset input placeholder
-    const userInput = document.getElementById('userInput');
+    const userInput = document.getElementById("userInput");
     if (userInput) {
-      userInput.placeholder = 'Ask me about products or routines…';
+      userInput.placeholder = "Ask me about products or routines…";
     }
-    
+
     // Restart with name request
     askForUserName();
   }
@@ -185,52 +189,57 @@ function clearConversationAndRestart() {
 /* Toggle language direction between LTR and RTL */
 function toggleLanguageDirection() {
   const html = document.documentElement;
-  const currentDir = html.getAttribute('dir');
-  const newDir = currentDir === 'rtl' ? 'ltr' : 'rtl';
-  
+  const currentDir = html.getAttribute("dir");
+  const newDir = currentDir === "rtl" ? "ltr" : "rtl";
+
   setLanguageDirection(newDir);
 }
 
 /* Set language direction and update UI */
 function setLanguageDirection(direction) {
   const html = document.documentElement;
-  const languageText = document.getElementById('languageText');
-  
-  html.setAttribute('dir', direction);
-  html.setAttribute('lang', direction === 'rtl' ? 'ar' : 'en');
-  
+  const languageText = document.getElementById("languageText");
+
+  html.setAttribute("dir", direction);
+  html.setAttribute("lang", direction === "rtl" ? "ar" : "en");
+
   // Update language button text
   if (languageText) {
-    languageText.textContent = direction === 'rtl' ? 'English' : 'عربي';
+    languageText.textContent = direction === "rtl" ? "English" : "عربي";
   }
-  
+
   // Update input placeholders for RTL
   updatePlaceholdersForDirection(direction);
-  
+
   // Save language preference
-  localStorage.setItem('languageDirection', direction);
+  localStorage.setItem("languageDirection", direction);
 }
 
 /* Update input placeholders based on language direction */
 function updatePlaceholdersForDirection(direction) {
-  const productSearch = document.getElementById('productSearch');
-  const userInput = document.getElementById('userInput');
-  
-  if (direction === 'rtl') {
+  const productSearch = document.getElementById("productSearch");
+  const userInput = document.getElementById("userInput");
+
+  if (direction === "rtl") {
     if (productSearch) {
-      productSearch.placeholder = 'ابحث عن المنتجات بالاسم أو الكلمة المفتاحية...';
+      productSearch.placeholder =
+        "ابحث عن المنتجات بالاسم أو الكلمة المفتاحية...";
     }
     if (userInput) {
-      const userName = userProfile.name || '';
-      userInput.placeholder = `اسألني عن المنتجات أو الروتين${userName ? '، ' + userName : ''}…`;
+      const userName = userProfile.name || "";
+      userInput.placeholder = `اسألني عن المنتجات أو الروتين${
+        userName ? "، " + userName : ""
+      }…`;
     }
   } else {
     if (productSearch) {
-      productSearch.placeholder = 'Search products by name or keyword...';
+      productSearch.placeholder = "Search products by name or keyword...";
     }
     if (userInput) {
-      const userName = userProfile.name || '';
-      userInput.placeholder = `Ask me about products or routines${userName ? ', ' + userName : ''}…`;
+      const userName = userProfile.name || "";
+      userInput.placeholder = `Ask me about products or routines${
+        userName ? ", " + userName : ""
+      }…`;
     }
   }
 }
@@ -238,7 +247,7 @@ function updatePlaceholdersForDirection(direction) {
 /* Load selected products from localStorage */
 function loadSelectedProducts() {
   try {
-    const savedProducts = localStorage.getItem('lorealSelectedProducts');
+    const savedProducts = localStorage.getItem("lorealSelectedProducts");
     if (savedProducts) {
       selectedProducts = JSON.parse(savedProducts);
       updateSelectedProductsDisplay();
@@ -246,7 +255,7 @@ function loadSelectedProducts() {
       updateProductVisualStates();
     }
   } catch (error) {
-    console.warn('Could not load selected products:', error);
+    console.warn("Could not load selected products:", error);
     selectedProducts = [];
   }
 }
@@ -254,9 +263,12 @@ function loadSelectedProducts() {
 /* Save selected products to localStorage */
 function saveSelectedProducts() {
   try {
-    localStorage.setItem('lorealSelectedProducts', JSON.stringify(selectedProducts));
+    localStorage.setItem(
+      "lorealSelectedProducts",
+      JSON.stringify(selectedProducts)
+    );
   } catch (error) {
-    console.warn('Could not save selected products:', error);
+    console.warn("Could not save selected products:", error);
   }
 }
 
@@ -265,26 +277,28 @@ function clearAllSelectedProducts() {
   if (selectedProducts.length === 0) {
     return;
   }
-  
-  if (confirm('Are you sure you want to remove all selected products?')) {
+
+  if (confirm("Are you sure you want to remove all selected products?")) {
     // Remove visual selection states from all product tiles
-    selectedProducts.forEach(product => {
-      const productCard = document.querySelector(`[data-product-id="${product.id}"]`);
+    selectedProducts.forEach((product) => {
+      const productCard = document.querySelector(
+        `[data-product-id="${product.id}"]`
+      );
       if (productCard) {
-        productCard.classList.remove('selected');
-        const addBtn = productCard.querySelector('.add-product-btn');
+        productCard.classList.remove("selected");
+        const addBtn = productCard.querySelector(".add-product-btn");
         if (addBtn) {
           addBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Add';
-          addBtn.classList.remove('added');
+          addBtn.classList.remove("added");
         }
       }
     });
-    
+
     // Clear the array and update display
     selectedProducts = [];
     updateSelectedProductsDisplay();
     saveSelectedProducts();
-    
+
     // Update user profile
     userProfile.selectedProducts = [];
     saveConversationHistory();
@@ -327,12 +341,12 @@ function addToSelection(productId) {
           addBtn.classList.add("added");
         }
       }
-      
+
       // Update user profile
-      userProfile.selectedProducts = selectedProducts.map(p => ({
+      userProfile.selectedProducts = selectedProducts.map((p) => ({
         name: p.name,
         brand: p.brand,
-        category: p.category
+        category: p.category,
       }));
       saveConversationHistory();
     }
@@ -359,12 +373,12 @@ function removeFromSelection(productId) {
       addBtn.classList.remove("added");
     }
   }
-  
+
   // Update user profile
-  userProfile.selectedProducts = selectedProducts.map(p => ({
+  userProfile.selectedProducts = selectedProducts.map((p) => ({
     name: p.name,
     brand: p.brand,
-    category: p.category
+    category: p.category,
   }));
   saveConversationHistory();
 }
@@ -396,15 +410,18 @@ function updateSelectedProductsDisplay() {
     `
     )
     .join("");
-  
-  const clearAllButton = selectedProducts.length > 1 ? `
+
+  const clearAllButton =
+    selectedProducts.length > 1
+      ? `
     <div class="selected-products-actions">
       <button class="clear-all-btn" onclick="clearAllSelectedProducts()" title="Remove all selected products">
         <i class="fa-solid fa-trash-can"></i> Clear All (${selectedProducts.length})
       </button>
     </div>
-  ` : '';
-  
+  `
+      : "";
+
   selectedProductsList.innerHTML = productsHtml + clearAllButton;
 }
 
@@ -434,15 +451,15 @@ async function filterAndDisplayProducts() {
   }
 
   displayProducts(filteredProducts);
-  
+
   // Update search results info
   updateSearchResultsInfo(filteredProducts.length, products.length);
 }
 
 /* Update search results information */
 function updateSearchResultsInfo(filteredCount, totalCount) {
-  let existingInfo = document.getElementById('search-results-info');
-  
+  let existingInfo = document.getElementById("search-results-info");
+
   if (filteredCount === totalCount) {
     // Remove info if showing all products
     if (existingInfo) {
@@ -450,16 +467,16 @@ function updateSearchResultsInfo(filteredCount, totalCount) {
     }
     return;
   }
-  
+
   const infoText = `Showing ${filteredCount} of ${totalCount} products`;
-  
+
   if (existingInfo) {
     existingInfo.textContent = infoText;
   } else {
-    const productsContainer = document.getElementById('productsContainer');
-    const infoElement = document.createElement('div');
-    infoElement.id = 'search-results-info';
-    infoElement.className = 'search-results-info';
+    const productsContainer = document.getElementById("productsContainer");
+    const infoElement = document.createElement("div");
+    infoElement.id = "search-results-info";
+    infoElement.className = "search-results-info";
     infoElement.textContent = infoText;
     productsContainer.parentNode.insertBefore(infoElement, productsContainer);
   }
@@ -610,39 +627,48 @@ function extractUserContext(message) {
 /* Restore conversation history and display previous messages */
 function restoreConversationDisplay() {
   const chatWindow = document.getElementById("chatWindow");
-  
+
   if (conversationHistory.length > 0) {
     // Display recent conversation history (last 10 messages)
     const recentMessages = conversationHistory.slice(-10);
-    
-    chatWindow.innerHTML = recentMessages.map(msg => {
-      if (msg.context === 'name_introduction') return ''; // Skip name introduction
-      
-      if (msg.role === 'user') {
-        const userInitials = userProfile.name ? userProfile.name.charAt(0).toUpperCase() : "U";
-        return `
+
+    chatWindow.innerHTML = recentMessages
+      .map((msg) => {
+        if (msg.context === "name_introduction") return ""; // Skip name introduction
+
+        if (msg.role === "user") {
+          const userInitials = userProfile.name
+            ? userProfile.name.charAt(0).toUpperCase()
+            : "U";
+          return `
           <div class="chat-message user-message">
             <div class="message-avatar">${userInitials}</div>
             <div class="message-bubble">
-              <div class="message-sender">${userProfile.name || 'You'}</div>
-              ${msg.content.replace(`My name is ${userProfile.name}`, '')}
+              <div class="message-sender">${userProfile.name || "You"}</div>
+              ${msg.content.replace(`My name is ${userProfile.name}`, "")}
             </div>
           </div>
         `;
-      } else {
-        return `
+        } else {
+          return `
           <div class="chat-message ai-message">
             <div class="message-avatar"><i class="fa-solid fa-sparkles"></i></div>
             <div class="message-bubble">
               <div class="message-sender">L'Oréal Beauty Expert</div>
               ${msg.content}
-              ${msg.context === 'routine_generation' ? '<div class="routine-content">' + msg.content + '</div>' : ''}
+              ${
+                msg.context === "routine_generation"
+                  ? '<div class="routine-content">' + msg.content + "</div>"
+                  : ""
+              }
             </div>
           </div>
         `;
-      }
-    }).filter(html => html !== '').join('');
-    
+        }
+      })
+      .filter((html) => html !== "")
+      .join("");
+
     // Add welcome back message for returning users
     if (userProfile.name && userProfile.totalMessages > 0) {
       chatWindow.innerHTML += `
@@ -650,12 +676,21 @@ function restoreConversationDisplay() {
           <div class="message-avatar"><i class="fa-solid fa-sparkles"></i></div>
           <div class="message-bubble">
             <div class="message-sender">L'Oréal Beauty Expert</div>
-            Welcome back, ${userProfile.name}! I remember our previous conversations about your ${userProfile.skinType ? userProfile.skinType + ' skin' : 'beauty needs'}${userProfile.concerns.length > 0 ? ' and concerns with ' + userProfile.concerns.slice(0,2).join(' and ') : ''}. How can I help you today?
+            Welcome back, ${
+              userProfile.name
+            }! I remember our previous conversations about your ${
+        userProfile.skinType ? userProfile.skinType + " skin" : "beauty needs"
+      }${
+        userProfile.concerns.length > 0
+          ? " and concerns with " +
+            userProfile.concerns.slice(0, 2).join(" and ")
+          : ""
+      }. How can I help you today?
           </div>
         </div>
       `;
     }
-    
+
     // Scroll to bottom
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }
@@ -665,10 +700,10 @@ function restoreConversationDisplay() {
 document.addEventListener("DOMContentLoaded", () => {
   // Load selected products first
   loadSelectedProducts();
-  
+
   // Load previous conversation history
   loadConversationHistory();
-  
+
   // Set session start time if new session
   if (!userProfile.sessionStarted) {
     userProfile.sessionStarted = new Date().toISOString();
@@ -676,10 +711,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize search filters
   currentFilters = {
-    category: '',
-    search: ''
+    category: "",
+    search: "",
   };
-  
+
   // Initialize chat - either restore history or ask for name
   if (userProfile.name && conversationHistory.length > 0) {
     restoreConversationDisplay();
@@ -697,64 +732,64 @@ document.addEventListener("DOMContentLoaded", () => {
   if (generateBtn) {
     generateBtn.addEventListener("click", generatePersonalizedRoutine);
   }
-  
+
   // Add event listener for Clear Chat button
   const clearChatBtn = document.getElementById("clearChatBtn");
   if (clearChatBtn) {
     clearChatBtn.addEventListener("click", clearConversationAndRestart);
   }
-  
+
   // Add event listener for language toggle
-  const languageToggle = document.getElementById('languageToggle');
-  const languageText = document.getElementById('languageText');
-  
+  const languageToggle = document.getElementById("languageToggle");
+  const languageText = document.getElementById("languageText");
+
   if (languageToggle) {
-    languageToggle.addEventListener('click', toggleLanguageDirection);
-    
+    languageToggle.addEventListener("click", toggleLanguageDirection);
+
     // Load saved language preference
-    const savedDirection = localStorage.getItem('languageDirection') || 'ltr';
+    const savedDirection = localStorage.getItem("languageDirection") || "ltr";
     setLanguageDirection(savedDirection);
   }
-  
+
   // Add event listeners for product search
-  const productSearch = document.getElementById('productSearch');
-  const clearSearchBtn = document.getElementById('clearSearch');
-  const searchContainer = document.querySelector('.search-input-container');
-  
+  const productSearch = document.getElementById("productSearch");
+  const clearSearchBtn = document.getElementById("clearSearch");
+  const searchContainer = document.querySelector(".search-input-container");
+
   if (productSearch) {
     // Real-time search as user types
-    productSearch.addEventListener('input', async (e) => {
+    productSearch.addEventListener("input", async (e) => {
       currentFilters.search = e.target.value.trim();
-      
+
       // Show/hide clear button
       if (currentFilters.search) {
-        searchContainer.classList.add('has-text');
+        searchContainer.classList.add("has-text");
       } else {
-        searchContainer.classList.remove('has-text');
+        searchContainer.classList.remove("has-text");
       }
-      
+
       // Debounce search to avoid too many calls
       clearTimeout(productSearch.searchTimeout);
       productSearch.searchTimeout = setTimeout(() => {
         filterAndDisplayProducts();
       }, 300);
     });
-    
+
     // Handle Enter key
-    productSearch.addEventListener('keypress', async (e) => {
-      if (e.key === 'Enter') {
+    productSearch.addEventListener("keypress", async (e) => {
+      if (e.key === "Enter") {
         e.preventDefault();
         clearTimeout(productSearch.searchTimeout);
         await filterAndDisplayProducts();
       }
     });
   }
-  
+
   if (clearSearchBtn) {
-    clearSearchBtn.addEventListener('click', async () => {
-      productSearch.value = '';
-      currentFilters.search = '';
-      searchContainer.classList.remove('has-text');
+    clearSearchBtn.addEventListener("click", async () => {
+      productSearch.value = "";
+      currentFilters.search = "";
+      searchContainer.classList.remove("has-text");
       await filterAndDisplayProducts();
       productSearch.focus();
     });
@@ -818,9 +853,9 @@ async function generatePersonalizedRoutine() {
       timestamp: new Date().toISOString(),
       context: "routine_generation",
       messageId: Date.now() + Math.random(),
-      products: productData
+      products: productData,
     });
-    
+
     // Save conversation history
     saveConversationHistory();
 
@@ -891,7 +926,7 @@ async function callOpenAIForRoutine(productData) {
     timestamp: new Date().toISOString(),
     context: "routine_generation",
     products: productData,
-    messageId: Date.now() + Math.random()
+    messageId: Date.now() + Math.random(),
   });
 
   const messages = [
@@ -980,7 +1015,7 @@ chatForm.addEventListener("submit", async (e) => {
     content: userMessage,
     timestamp: new Date().toISOString(),
     context: "general_chat",
-    messageId: Date.now() + Math.random() // Unique ID for message
+    messageId: Date.now() + Math.random(), // Unique ID for message
   });
 
   // Display user message with name
@@ -1026,9 +1061,9 @@ chatForm.addEventListener("submit", async (e) => {
       content: response,
       timestamp: new Date().toISOString(),
       context: "general_chat",
-      messageId: Date.now() + Math.random()
+      messageId: Date.now() + Math.random(),
     });
-    
+
     // Save conversation history after each exchange
     saveConversationHistory();
 
