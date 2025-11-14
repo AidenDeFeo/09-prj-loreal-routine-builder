@@ -7,7 +7,13 @@
     "build": "echo 'Build complete'",
     "dev": "python3 -m http.server 8000"
   },
-  "keywords": ["beauty", "skincare", "ai", "openai", "loreal"],
+  "keywords": [
+    "beauty",
+    "skincare",
+    "ai",
+    "openai",
+    "loreal"
+  ],
   "author": "Student",
   "license": "MIT",
   "dependencies": {},
